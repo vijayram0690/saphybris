@@ -1,0 +1,10 @@
+docker run -it 844403367ed2 -p 80:8983 -v /opt/hybris/solr/data:/opt/solr-standalone/data
+
+
+
+docker run \
+    -d \
+	-p 80:8983 \
+    -v /opt/hybris/solr/data:/opt/solr/server/solr/ \
+    --name y.s.solr \
+    mateusprado/hybris-y.i.solr
