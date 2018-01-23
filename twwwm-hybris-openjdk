@@ -1,0 +1,21 @@
+FROM openjdk:8-jre
+MAINTAINER TWM <vnaga6810@gmail.com>
+
+RUN mkdir /apps/hybris
+
+COPY hybris /apps/hybris/hybris
+RUN cd /apps/hybris/hybris/bin/platform && \
+    chmod +x *.sh && \
+    useradd hybris
+
+WORKDIR /apps/hybris/hybris/bin/platform
+
+ENV PLATFORM_HOME "/apps/hybris/hybris/bin/platform"
+#ENV ANT_OPTS "-Xmx512m -XX:MaxPermSize=128M" -- increase to 8GB of Container
+ENV ANT_HOME $PLATFORM_HOME/apache-ant-1.9.1
+ENV PATH $ANT_HOME/bin:$PLATFORM_HOME:$PATH
+
+RUN ant -Dinput.template=develop -Dmaven.update.dbdrivers=false
+
+#COPY config/local.properties /apps/hybris/hybris/config/local.properties
+#COPY config/localextensions.xml /apps/hybris/hybris/config/localextensions.xml
