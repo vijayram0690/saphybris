@@ -1,0 +1,19 @@
+FROM TWM/hybris:6.3-base
+MAINTAINER TWM <vnaga6810@gmail.com>
+
+COPY config/local.properties /apps/hybris/hybris/config/local.properties
+COPY config/localextensions.xml /apps/hybris/hybris/config/localextensions.xml
+
+RUN chown -RL hybris:hybris /apps/hybris
+
+USER hybris
+
+RUN ant clean all -Dinput.template=develop -Dmaven.update.dbdrivers=false
+
+EXPOSE \
+    9001 \
+    9002 \
+    8000
+
+## Run start script
+CMD ["hybrisserver.sh", "debug"]
