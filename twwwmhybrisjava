@@ -1,0 +1,26 @@
+FROM centos:7
+
+MAINTAINER twm <vnaga6810@gmail.com>
+
+CMD cd /opt
+
+RUN wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+  http://download.oracle.com/otn-pub/java/jdk/9.0.4+11/c2514751926b4512b076cc82f959763f/jdk-9.0.4_linux-x64_bin.tar.gz
+
+RUN tar zxf jdk-9.0.4_linux-x64_bin.tar.gz -C /usr/local
+
+CMD cd /usr/local/jdk-9.0.4/
+
+CMD alternatives --install /usr/bin/java java /usr/local/jdk-9.0.4/bin/java 2
+
+CMD alternatives --install /usr/bin/jar jar /usr/local/jdk-9.0.4/bin/jar 2
+
+CMD alternatives --install /usr/bin/javac javac /usr/local/jdk-9.0.4/bin/javac 2
+
+CMD alternatives --set jar /usr/local/jdk-9.0.4/bin/jar
+
+CMD alternatives --set javac /usr/local/jdk-9.0.4/bin/javac
+
+CMD export JAVA_HOME=/usr/local/jdk-9.0.4
+
+CMD export PATH=$PATH:/usr/local/jdk-9.0.4/bin
